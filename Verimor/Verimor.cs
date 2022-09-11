@@ -7,7 +7,7 @@ namespace Verimor {
     public interface IVerimor {
         void SetUsername(string username);
         void SetPassword(string password);
-        void Sms(string header, string phone, string message, string sendAt = "", string validFor = "");
+        void Sms(string header, string phone, string message, string sendAt = null, string validFor = null);
     }
     public class Verimor : IVerimor {
         private string Endpoint { get; set; }
@@ -48,7 +48,7 @@ namespace Verimor {
         public void SetPassword(string password) {
             Password = password;
         }
-        public void Sms(string header, string phone, string message, string sendAt = "", string validFor = "") {
+        public void Sms(string header, string phone, string message, string sendAt = null, string validFor = null) {
             var http = new HttpClient();
             var data = new Request { };
             var request = new HttpRequestMessage(HttpMethod.Post, Endpoint + "/send.json") { Content = new StringContent(JsonString(data), Encoding.UTF8, MediaTypeNames.Application.Json) };
