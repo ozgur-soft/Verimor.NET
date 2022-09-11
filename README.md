@@ -17,5 +17,5 @@ verimor.SetUsername("api username");
 verimor.SetPassword("api password");
 var messages = new List<Verimor.Message> { };
 messages.Add(new() { Msg = "message", No = "905551234567" });
-verimor.Sms("message header", messages);
+verimor.Sms("header", messages);
 ```
