@@ -13,7 +13,9 @@ dotnet add package Verimor --version 1.0.0
 using Verimor;
 
 var verimor = new Verimor();
-verimor.SetUsercode("api usercode");
+verimor.SetUsername("api username");
 verimor.SetPassword("api password");
-verimor.Sms("message header", "phone number", "message"); // Sending SMS message
+var messages = new List<Verimor.Message> { };
+messages.Add(new() { Msg = "message", No = "905551234567" });
+verimor.Sms("message header", messages, "message");
 ```
