@@ -7,7 +7,7 @@ namespace Verimor {
     public interface IVerimor {
         void SetUsername(string username);
         void SetPassword(string password);
-        void Sms(string source, List<Verimor.Message> messages, string sendAt = null, string validFor = null);
+        bool Sms(string source, List<Verimor.Message> messages, string sendAt = null, string validFor = null);
     }
     public class Verimor : IVerimor {
         private string Endpoint { get; set; }
@@ -48,7 +48,7 @@ namespace Verimor {
         public void SetPassword(string password) {
             Password = password;
         }
-        public void Sms(string source, List<Message> messages, string sendAt = null, string validFor = null) {
+        public bool Sms(string source, List<Message> messages, string sendAt = null, string validFor = null) {
             var http = new HttpClient();
             var data = new Request {
                 Username = Username,
@@ -65,8 +65,9 @@ namespace Verimor {
                 using (var reader = new StreamReader(stream, Encoding.UTF8)) {
                     Console.WriteLine(reader.ReadToEnd());
                 }
+                return false;
             }
-            return;
+            return true;
         }
         public static string JsonString<T>(T data) where T : class {
             return JsonSerializer.Serialize(data, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, WriteIndented = true });
