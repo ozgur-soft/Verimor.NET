@@ -7,7 +7,7 @@ namespace Verimor {
     public interface IVerimor {
         void SetUsername(string username);
         void SetPassword(string password);
-        void Sms(string header, string phone, string message, string sendAt = null, string validFor = null);
+        void Sms(string source, List<Verimor.Message> messages, string sendAt = null, string validFor = null);
     }
     public class Verimor : IVerimor {
         private string Endpoint { get; set; }
@@ -38,7 +38,7 @@ namespace Verimor {
             [JsonPropertyName("msg")]
             public string Msg { init; get; }
             [JsonPropertyName("dest")]
-            public string Dest { init; get; }
+            public string No { init; get; }
             [JsonPropertyName("id")]
             public string Id { init; get; }
         }
@@ -48,9 +48,16 @@ namespace Verimor {
         public void SetPassword(string password) {
             Password = password;
         }
-        public void Sms(string header, string phone, string message, string sendAt = null, string validFor = null) {
+        public void Sms(string source, List<Message> messages, string sendAt = null, string validFor = null) {
             var http = new HttpClient();
-            var data = new Request { };
+            var data = new Request {
+                Username = Username,
+                Password = Password,
+                SourceAddr = source,
+                Messages = messages,
+                SendAt = sendAt,
+                ValidFor = validFor
+            };
             var request = new HttpRequestMessage(HttpMethod.Post, Endpoint + "/send.json") { Content = new StringContent(JsonString(data), Encoding.UTF8, MediaTypeNames.Application.Json) };
             var response = http.Send(request);
             var result = JsonSerializer.Deserialize<string>(response.Content.ReadAsStream());
