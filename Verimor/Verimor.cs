@@ -60,8 +60,8 @@ namespace Verimor {
             };
             var request = new HttpRequestMessage(HttpMethod.Post, Endpoint + "/send.json") { Content = new StringContent(JsonString(data), Encoding.UTF8, MediaTypeNames.Application.Json) };
             var response = http.Send(request);
-            var stream = response.Content.ReadAsStream();
             if (!response.IsSuccessStatusCode) {
+                var stream = response.Content.ReadAsStream();
                 using (var reader = new StreamReader(stream, Encoding.UTF8)) {
                     Console.WriteLine(reader.ReadToEnd());
                 }
