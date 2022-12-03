@@ -49,7 +49,7 @@ namespace Verimor {
             Password = password;
         }
         public bool Sms(string source, List<Message> messages, string sendAt = null, string validFor = null) {
-            var http = new HttpClient();
+            using var http = new HttpClient();
             var data = new Request {
                 Username = Username,
                 Password = Password,
@@ -58,13 +58,12 @@ namespace Verimor {
                 SendAt = sendAt,
                 ValidFor = validFor
             };
-            var request = new HttpRequestMessage(HttpMethod.Post, Endpoint + "/send.json") { Content = new StringContent(JsonString(data), Encoding.UTF8, MediaTypeNames.Application.Json) };
-            var response = http.Send(request);
+            using var request = new HttpRequestMessage(HttpMethod.Post, Endpoint + "/send.json") { Content = new StringContent(JsonString(data), Encoding.UTF8, MediaTypeNames.Application.Json) };
+            using var response = http.Send(request);
             if (!response.IsSuccessStatusCode) {
-                var stream = response.Content.ReadAsStream();
-                using (var reader = new StreamReader(stream, Encoding.UTF8)) {
-                    Console.WriteLine(reader.ReadToEnd());
-                }
+                using var stream = response.Content.ReadAsStream();
+                using var reader = new StreamReader(stream, Encoding.UTF8);
+                Console.WriteLine(reader.ReadToEnd());
                 return false;
             }
             return true;
