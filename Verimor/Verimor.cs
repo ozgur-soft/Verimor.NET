@@ -14,7 +14,7 @@ namespace Verimor {
         private string Username { get; set; }
         private string Password { get; set; }
         public Verimor() {
-            Endpoint = "http://sms.verimor.com.tr/v2";
+            Endpoint = "https://sms.verimor.com.tr/v2";
         }
         public class Request {
             [JsonPropertyName("username")]
