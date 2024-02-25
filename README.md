@@ -14,8 +14,9 @@ namespace Verimor {
             var verimor = new Verimor();
             verimor.SetUsername("api username");
             verimor.SetPassword("api password");
-            var messages = new List<Verimor.Message> { };
-            messages.Add(new() { Msg = "message", No = "905551234567" });
+            var messages = new List<Verimor.Message> {
+                new() { Msg = "message", No = "905551234567" }
+            };
             var sent = verimor.Sms("header", messages);
             if (sent) {
                 Console.WriteLine("Message sent");
