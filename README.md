@@ -3,7 +3,7 @@ An easy-to-use verimor.com.tr API with .NET
 
 # Installation
 ```bash
-dotnet add package Verimor --version 1.2.0
+dotnet add package Verimor --version 1.2.1
 ```
 
 # Usage
