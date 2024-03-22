@@ -64,8 +64,7 @@ namespace Verimor {
             if (!response.IsSuccessStatusCode) {
                 using var stream = response.Content.ReadAsStream();
                 using var reader = new StreamReader(stream, Encoding.UTF8);
-                Console.WriteLine(reader.ReadToEnd());
-                return false;
+                throw new Exception(reader.ReadToEnd());
             }
             return true;
         }
@@ -80,8 +79,7 @@ namespace Verimor {
             using var stream = response.Content.ReadAsStream();
             using var reader = new StreamReader(stream, Encoding.UTF8);
             if (!response.IsSuccessStatusCode) {
-                Console.WriteLine(reader.ReadToEnd());
-                return -1;
+                throw new Exception(reader.ReadToEnd());
             }
             return long.TryParse(reader.ReadToEnd(), out var result) ? result : -1;
         }
